@@ -1,0 +1,5 @@
+[require_login][a0520ae7] BOOT
+[require_login][a0520ae7] session.php included
+[require_login][a0520ae7] start_secure_session OK
+[require_login][a0520ae7] uid=3
+[require_login][a0520ae7] PASS

@@ -1,0 +1,211 @@
+:root{
+  --bg:#f7f7fb;--card:#ffffff;--ink:#111827;--muted:#6b7280;--brand:#2563eb;--brand-ink:#ffffff;
+  --border:#e5e7eb;--shadow:0 10px 20px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;}
+.app{min-height:100%;padding-bottom:72px}
+
+/* Header */
+header{position:sticky;top:0;background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));backdrop-filter:saturate(140%) blur(6px);z-index:10;border-bottom:1px solid var(--border)}
+.header-inner{display:flex;align-items:center;gap:12px;padding:12px 16px;}
+.logo-wrap{display:flex;align-items:center;gap:10px;}
+.logo{width:40px;height:40px;border-radius:12px;object-fit:contain;background:#fff;border:1px solid var(--border);}
+.brand-txt{font-weight:700;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Views */
+main.view{display:none}
+main.view.is-active{display:block}
+
+/* === Carousel (px移動対応) === */
+.carousel{position:relative;overflow:hidden;border-radius:18px;margin:12px 16px;background:#ddd}
+.track{display:flex;transition:transform .5s ease;will-change:transform}
+.slide{min-width:100%;aspect-ratio:16/9;position:relative}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+.dots{position:absolute;inset:auto 0 8px 0;display:flex;gap:6px;justify-content:center}
+.dot{width:7px;height:7px;border-radius:999px;background:rgba(255,255,255,.55);outline:1px solid rgba(0,0,0,.08)}
+.dot.is-active{background:#fff;width:18px}
+
+/* Sections */
+.section{padding:10px 16px}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  color:var(--ink);              /* ★ 白継承をリセット */
+}
+.card-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
+.card-hd h2{
+  font-size:16px;
+  margin:0;
+  color:inherit;                 /* ★ .card の色をそのまま使う */
+}
+.card-body{padding:16px}
+
+/* Stamp card */
+.stamp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stamp{position:relative;aspect-ratio:1/1;border:2px dashed #cbd5e1;border-radius:14px;background: radial-gradient(circle at 30% 30%,rgba(37,99,235,.08),transparent 40%), linear-gradient(135deg, #f9fafb, #f3f4f6)}
+.stamp__label{position:absolute;inset:auto 8px 8px auto;font-size:10px;color:var(--muted)}
+.stamp.is-filled{border-style:solid;border-color:#93c5fd;background:radial-gradient(60% 60% at 50% 50%,rgba(37,99,235,.15),rgba(37,99,235,.05) 70%),#eff6ff}
+.progress{display:flex;align-items:center;gap:8px;margin-top:14px;color:var(--muted);font-size:13px}
+.progress-bar{flex:1;height:8px;border-radius:999px;background:#e5e7eb;overflow:hidden}
+.progress-bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#60a5fa,#2563eb)}
+.redeem-wrap{display:flex;justify-content:flex-end;margin-top:10px}
+
+/* Coupon list */
+.coupon-list{display:grid;gap:12px}
+.coupon{background:var(--card);border:1px dashed #c7d2fe;border-radius:18px;padding:14px 16px;position:relative;transition:opacity .35s ease, transform .35s ease, height .4s ease, margin .4s ease, padding .4s ease, border-width .4s ease;overflow:hidden}
+.coupon h3{margin:0 0 6px;font-size:16px}
+.coupon .meta{color:var(--muted);font-size:12px}
+.coupon .cta{position:absolute;right:12px;top:12px}
+.coupon.is-removing{opacity:0;transform:translateY(-6px);height:0;margin:0;padding-top:0;padding-bottom:0;border-width:0}
+
+/* Sheet */
+.sheet{
+  position:fixed;left:0;right:0;bottom:-100%;
+  background:#fff;border-top:1px solid var(--border);
+  border-radius:18px 18px 0 0;box-shadow:var(--shadow);
+  transition:bottom .35s ease;z-index:40;
+  /* ★PCでヘッダーが見切れないように：内部スクロール＋高さ上限 */
+  max-height:calc(100vh - 12px);
+  overflow:auto;
+}
+.sheet.is-open{bottom:0}
+.sheet-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-bottom:1px solid var(--border);
+  /* ★スクロールしても常に見えるように */
+  position:sticky; top:0; background:#fff; z-index:1;
+}
+.sheet-hd h3{margin:0;font-size:18px}
+.sheet-body{padding:16px}
+.code{display:flex;align-items:center;justify-content:center;border:1px dashed #cbd5e1;border-radius:14px;height:120px;font-weight:800;letter-spacing:4px}
+
+/* Member card */
+.member{display:grid;gap:12px}
+.member-card{background:linear-gradient(135deg,#2563eb,#60a5fa);color:#fff;border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.member-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:12px}
+.nick-honor{font-size:12px;opacity:.9;margin-bottom:4px}
+.qr{display:block;width:120px;height:120px;border-radius:8px;background:#fff;border:1px solid rgba(0,0,0,.1)}
+.barcode{display:block;width:100%;height:42px;border-radius:6px;background:#fff;border:1px solid rgba(0,0,0,.1);overflow:hidden}
+
+/* === Member card tweaks === */
+.member-left{min-width:0;flex:1}                 /* ★縮小許容＋省略可 */
+.member-badge{font-size:12px;font-weight:800;letter-spacing:.08em;opacity:.9;margin-bottom:6px}
+.member-id{font-size:16px;font-weight:700;margin-top:0}
+.member-card .nick-honor{font-size:16px;margin:4px 0 6px}  /* ★会員番号と同サイズ */
+.member-shop{font-size:22px;font-weight:800}
+
+/* 省略表示ユーティリティ */
+.line-trim{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+
+/* Menu list */
+.menu-grid{display:grid;grid-template-columns:repeat(1,1fr);gap:12px}
+.menu-item{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:16px;padding:12px;cursor:pointer}
+.menu-thumb{width:68px;height:68px;border-radius:12px;object-fit:cover;border:1px solid var(--border)}
+.menu-meta{flex:1}
+.menu-meta h4{margin:0 0 4px;font-size:15px}
+.price{font-weight:700}
+
+/* Bottom nav */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--border);z-index:30}
+.tabs{display:flex;flex-wrap:nowrap;width:100%;overflow:hidden} /* ★1段固定＋はみ出し防止 */
+.tab{
+  flex:1 1 0; min-width:0;                 /* ★横幅を均等配分＆縮小許容 */
+  padding:8px 2px 10px;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  font-size:11px;color:var(--muted);text-decoration:none;
+}
+.tab span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis} /* ★ラベルは省略表示 */
+.tab svg{width:22px;height:22px;flex-shrink:0}                       /* ★アイコンは縮まない */
+.tab.is-active{color:var(--brand)}
+.tab.is-active svg path{fill:var(--brand)}
+
+/* Utilities */
+.btn{appearance:none;border:none;background:var(--brand);color:var(--brand-ink);padding:10px 14px;border-radius:12px;font-weight:700}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--border);padding:8px 12px;border-radius:10px}
+.muted{color:var(--muted)}
+input[type="text"]{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:14px}
+/* ==== Prevent double-tap zoom on tappable controls (keeps pinch zoom) ==== */
+button, .btn, .btn-ghost, .tab, .pw-toggle {
+  touch-action: manipulation;
+}
+
+@media(min-width:768px){
+  .app{max-width:480px;margin:0 auto}
+  body{background:linear-gradient(180deg,#eef2ff 0 180px, var(--bg) 180px 100%)}
+  header{border-radius:0 0 18px 18px;box-shadow:var(--shadow);margin:0 auto;max-width:480px}
+  .bottom-nav{left:50%;transform:translateX(-50%);max-width:480px;border-radius:16px 16px 0 0}
+}
+@media(min-width:768px){
+  .sheet{left:50%; right:auto; transform:translateX(-50%); width:480px;}
+}
+
+
+/* 印影（赤：龍／青：ゲーム） */
+.stamp .ink{
+  position:absolute; inset:0; display:none; align-items:center; justify-content:center;
+  font-weight:900; font-size:28px; line-height:1; color:#dc2626;
+  width:72%; height:72%; margin:auto; border:3px solid #dc2626; border-radius:50%;
+  transform:rotate(-12deg);
+  background:radial-gradient(circle at 30% 30%, rgba(220,38,38,.08), transparent 60%);
+  will-change: transform, filter;
+}
+.stamp.is-filled .ink{display:flex}
+.stamp .ink--game{color:#2563eb;border-color:#2563eb;background:radial-gradient(circle at 30% 30%, rgba(37,99,235,.10), transparent 60%)}
+
+/* ページャーUI */
+.pager{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:12px}
+.pager-info{min-width:72px; text-align:center}
+
+/* === RPS Arena === */
+.rps-arena{display:grid;gap:12px;justify-items:center;margin-top:4px}
+.rps-row{display:flex;gap:28px;align-items:center}
+.rps-col{display:flex;flex-direction:column;align-items:center;gap:6px}
+.rps-label{font-size:12px;font-weight:700;color:var(--muted)}
+.rps-hand{width:96px;height:96px;border-radius:16px;border:1px solid var(--border);background:#fff; display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:var(--shadow)}
+.rps-vs{font-weight:800;font-size:18px;color:var(--muted)}
+.rps-count{font-size:28px;font-weight:800;color:var(--ink);min-height:32px}
+.rps-ctrl{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.rps-guide{font-size:14px;color:var(--muted);text-align:center}
+
+/* Result badge */
+.rps-badge{padding:6px 12px;border-radius:999px;font-weight:800;display:none}
+.rps-badge.show{display:inline-block;animation:pop .4s ease, glow 1.2s ease}
+.rps-badge.win{background:#e0ecff;color:#1d4ed8}
+.rps-badge.draw{background:#e7f8ef;color:#047857}
+.rps-badge.lose{background:#f5e7e7;color:#b91c1c}
+
+/* Floating bonus */
+.float-bonus{position:absolute;left:50%;transform:translateX(-50%);top:-8px;font-weight:800}
+.float-bonus.animate{animation:flyup .9s ease forwards}
+
+/* スタンプ演出（強） */
+.stamp.is-just-stamped .ink{animation: stampPopStrong .6s cubic-bezier(.19,1,.22,1) both, stampGlow 1.3s ease-out both; filter: drop-shadow(0 6px 10px rgba(0,0,0,.18))}
+.stamp.is-just-stamped::before{content:""; position:absolute; inset:0; margin:auto; width:14px; height:14px; background:radial-gradient(circle, rgba(255,255,255,.95), rgba(255,255,255,0) 60%); border-radius:50%; animation:flash .42s ease-out both; pointer-events:none}
+.stamp.is-just-stamped::after{content:""; position:absolute; inset:0; margin:auto; width:14px; height:14px; border:3px solid rgba(220,38,38,.45); border-radius:50%; animation:rippleBig .75s ease-out both; pointer-events:none}
+.stamp.is-just-stamped.is-game::after{border-color: rgba(37,99,235,.55)}
+
+@keyframes stampPopStrong{0%{transform:scale(3.1) rotate(-12deg);opacity:0}55%{transform:scale(.86) rotate(-12deg);opacity:1}80%{transform:scale(1.05) rotate(-12deg)}100%{transform:scale(1) rotate(-12deg)}}
+@keyframes stampGlow{0%{box-shadow:0 0 0 0 rgba(37,99,235,.0)}100%{box-shadow:0 0 36px 6px rgba(37,99,235,.18)}}
+@keyframes flash{0%{transform:scale(0);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+@keyframes rippleBig{0%{transform:scale(0);opacity:.75}100%{transform:scale(3.6);opacity:0}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes glow{0%{box-shadow:0 0 0 rgba(29,78,216,.0)}100%{box-shadow:0 0 30px rgba(29,78,216,.25)}}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-6px)}40%,60%{transform:translateX(6px)}}
+@keyframes flyup{0%{opacity:0;transform:translate(-50%,6px)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-32px)}}
+
+/* ==== 消費済みスタンプ（打消し表示） ==== */
+.stamp.is-consumed{opacity:.75;filter:grayscale(.1)}
+.stamp.is-consumed .ink{opacity:.6}
+.stamp .strike{display:none;position:absolute;inset:0;margin:auto;height:0;width:120%;border-top:4px solid rgba(220,38,38,.78);transform:rotate(-22deg);pointer-events:none;opacity:.95}
+.stamp.is-consumed .strike{display:block}
+.stamp.is-consumed.is-game .strike{border-top-color: rgba(37,99,235,.8)}
+.stamp.consume-anim .strike{display:block;width:0;animation:drawStrike .5s ease forwards}
+@keyframes drawStrike{from{width:0}to{width:120%}}
+
+/* 会員証 QR を右寄せ */
+#qrCanvas.qr{margin-left:auto}
